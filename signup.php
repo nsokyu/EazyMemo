@@ -3,19 +3,24 @@ $cleans = array(); //エスケープ後配列
 $errors = array(); //エラー出力用配列
 $pageChange = 0;   //登録、登録完了ページの切り替え
 
+//共通関数
+require_once('./functions.php');
 
 //入力チェック
 if (!empty($_POST['buttonSignUp'])) {
     foreach ($_POST as $key => $value) {
-        //エスケープ
-        $cleans[$key] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+        //エスケープ 共通関数
+        $cleans[$key] = $cleans[$key] = h($value);
     }
 }
 
 //登録ボタンを押している場合
 if (!empty($cleans['buttonSignUp'])) {
     //エラーチェック
-    $errors = nullCheck($cleans);
+    nullCheck($errors,$cleans['username'],"ユーザーネーム");
+    nullCheck($errors,$cleans['mailaddress'],"メールアドレス");
+    nullCheck($errors,$cleans['password1'],"パスワード");
+    nullCheck($errors,$cleans['password2'],"パスワード(確認)");
 }
 
 //メールアドレスの登録チェック
@@ -30,7 +35,7 @@ if (empty($errors) && (!empty($cleans['buttonSignUp']))) {
         $stmt -> bindValue(1, $cleans['mailaddress']);
         $stmt -> execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        
+
         //メールチェックが登録されているか
         if (!$row) {
             //メールアドレスが登録されていない場合は登録処理
@@ -54,23 +59,6 @@ if (empty($errors) && (!empty($cleans['buttonSignUp']))) {
     }
 }
 
-//nullチェック
-function nullCheck($check)
-{
-    if (empty($check['username'])) {
-        $error[] = "ユーザーネームが未入力です。";
-    }
-    if (empty($check['mailaddress'])) {
-        $error[] = "メールアドレスが未入力です。";
-    }
-    if (empty($check['password1'])) {
-        $error[] = "パスワードが未入力です。";
-    }
-    if (empty($check['password2'])) {
-        $error[] = "パスワード(確認)が未入力です。";
-    }
-    return $error;
-}
  ?>
 
 
@@ -104,13 +92,13 @@ function nullCheck($check)
           echo "</li>";
       }
       echo "</ul>";
-  }  ?>
+  } ?>
   <form action="" method="post">
     <div>
-      <p>ユーザーネーム<input type="text" name="username" <?php if (!empty($cleans['username'])) {
+      <p>ユーザーネーム<input type="text" name="username" placeholder="イージーメモタロウ" <?php if (!empty($cleans['username'])) {
       echo "value=\"".$cleans['username']."\"";
   } ?>></p>
-      <p>メールアドレス<input type="text" name="mailaddress" <?php if (!empty($cleans['mailaddress'])) {
+      <p>メールアドレス<input type="text" name="mailaddress" placeholder="eazymemo@example.com" <?php if (!empty($cleans['mailaddress'])) {
       echo "value =".$cleans['mailaddress'];
   } ?>></p>
       <p>パスワード<input type="password" name="password1" <?php if (!empty($cleans['password1'])) {

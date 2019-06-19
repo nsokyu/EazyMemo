@@ -2,11 +2,16 @@
 $cleans = array(); //エスケープ後配列
 $errors = array(); //エラー出力用配列
 
+//共通関数
+require_once('./functions.php');
+//セッションスタート
+require_unlogined_session();
+
 //入力チェック
 if (!empty($_POST['buttonSignIn'])) {
     foreach ($_POST as $key => $value) {
         //エスケープ
-        $cleans[$key] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+        $cleans[$key] = h($value);
     }
 }
 
@@ -29,7 +34,15 @@ if (empty($errors) && (!empty($cleans['buttonSignIn']))) {
             //登録されていない場合はエラー
             $errors[] = "メールアドレス または パスワードに誤りがあります。";
         } else {
-            echo "ログインに成功";
+            //ログインの認証に成功
+            //セッションIDの追跡を防ぐ
+            session_regenerate_id(true);
+            //ユーザーネーム、ユーザーIDをセッションにセット
+            $_SESSION['name'] = $row['name'];
+            $_SESSION['id'] = $row['id'];
+            //ログインページに遷移
+            header('location: main.php');
+            exit;
         }
     } catch (PDOException $e) {
         //デバック用
@@ -85,7 +98,7 @@ if (empty($errors) && (!empty($cleans['buttonSignIn']))) {
   <br>
   <p>初めての方は こちらから</p>
   <button type="submit" onclick="location.href='signup.php'">ユーザー登録</button>
-  </form>
+
 
 </body>
 
