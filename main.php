@@ -106,8 +106,34 @@ if (empty($errors) && (!empty($cleans['buttonSave']))) {
     </select><br>
     <button type="input" name="buttonSave" value="save">保存</button>
   </form>
-
   <br>
+  <br>
+
+  <?php
+
+  try {
+      //DB接続
+      $dbh = db_connect();
+
+      $user_id = $_SESSION['id'];
+      $stmt = $dbh->query("SELECT * FROM memos WHERE user_id = $user_id AND is_removed = 0 ORDER BY updated_at DESC"); ?>
+  <article class="">
+    <?php
+    //メモを表示
+    while ($row = $stmt->fetch()): ?>
+    <p><a href="#"><?php echo $row['memo']; ?></a></p>
+    <time><?php echo $row['updated_at']; ?></time>
+    <hr>
+    <?php endwhile; ?>
+  </article>
+  <?php
+  } catch (PDOException $e) {
+      //デバック用
+      $errors[] = 'DB接続エラー: '.$e -> getMessage();
+  }
+?>
+
+
   <button type="submit" name="buttonSignOut" value="signOut" onclick="location.href='signout.php'">ログアウト</button>
 
 
