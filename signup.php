@@ -5,6 +5,7 @@ $pageChange = 0;   //登録、登録完了ページの切り替え
 
 //共通関数
 require_once('./functions.php');
+require_once('./db_connect.php');
 
 //入力チェック
 if (!empty($_POST['buttonSignUp'])) {
@@ -28,7 +29,6 @@ if (!empty($cleans['buttonSignUp'])) {
 if (empty($errors) && (!empty($cleans['buttonSignUp']))) {
     try {
         //DB接続
-        require_once('./db_connect.php');
         $dbh = db_connect();
 
         $stmt = $dbh->prepare("SELECT * FROM users WHERE email =?");

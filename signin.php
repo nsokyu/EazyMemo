@@ -4,6 +4,7 @@ $errors = array(); //エラー出力用配列
 
 //共通関数
 require_once('./functions.php');
+require_once('./db_connect.php');
 //セッションスタート
 require_unlogined_session();
 
@@ -21,7 +22,6 @@ if (!empty($_POST['buttonSignIn'])) {
 if (empty($errors) && (!empty($cleans['buttonSignIn']))) {
     try {
         //DB接続
-        require_once('./db_connect.php');
         $dbh = db_connect();
 
         $stmt = $dbh->prepare("SELECT * FROM users WHERE email =?");
