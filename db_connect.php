@@ -1,7 +1,7 @@
 <?php
 ///DB接続の共通処理
 
-const DB_DSN = 'mysql:host=127.0.0.1;dbname=easy_memo;charset=utf8'; //データソースネーム
+const DB_DSN = 'mysql:host=localhost;dbname=eazy_memo;charset=utf8'; //データソースネーム
 const DB_USERNAME = 'root'; //ユーザーネーム
 const DB_PASSWORD = 'root'; //パスワード
 
