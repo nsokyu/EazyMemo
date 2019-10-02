@@ -1,0 +1,53 @@
+.wrapper {
+  margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.div-regulate-signin {
+  max-width: 480px;
+  padding: 30px 38px 66px;
+  margin: 0 auto;
+  background-color: #eee;
+  border: 3px dotted rgba(0, 0, 0, 0.1);
+}
+
+.div-regulate {
+  max-width: 450px;
+  padding: 30px 3px 10px;
+  margin: 0 auto;
+}
+
+.form-control {
+  position: relative;
+  font-size: 14px;
+  height: auto;
+  padding: 8px;
+}
+
+.SignupForm_label {
+  font-size: 80%;
+}
+
+.ul-error {
+  color: rgb(255, 60, 0);
+  font-size: 80%;
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.text-mini {
+  color: rgb(92, 90, 89);
+  font-size: 70%;
+}
+
+.colortest {
+  background-color: aquamarine;
+}
+
+.colortest2 {
+  background-color: greenyellow;
+}
+
+.memo_time {
+    font-size: 70%;
+}
